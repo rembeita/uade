@@ -779,3 +779,22 @@ java.io.IOException: El proceso no tiene acceso al archivo porque otro proceso t
 	at org.eclipse.jgit.api.AddCommand.call(AddCommand.java:228)
 	at org.eclipse.egit.ui.internal.staging.StagingView$49.run(StagingView.java:2552)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.core.jobs 4 2 2016-04-10 17:14:27.962
+!MESSAGE An internal error occurred during: "Committing changes".
+!STACK 0
+org.eclipse.swt.SWTException: Invalid thread access
+	at org.eclipse.swt.SWT.error(SWT.java:4491)
+	at org.eclipse.swt.SWT.error(SWT.java:4406)
+	at org.eclipse.swt.SWT.error(SWT.java:4377)
+	at org.eclipse.swt.dnd.DND.error(DND.java:292)
+	at org.eclipse.swt.dnd.DND.error(DND.java:238)
+	at org.eclipse.swt.dnd.Clipboard.<init>(Clipboard.java:66)
+	at org.eclipse.egit.ui.internal.components.RepositorySelectionPage.<init>(RepositorySelectionPage.java:329)
+	at org.eclipse.egit.ui.internal.components.RepositorySelectionPage.<init>(RepositorySelectionPage.java:386)
+	at org.eclipse.egit.ui.internal.push.AddRemotePage.<init>(AddRemotePage.java:39)
+	at org.eclipse.egit.ui.internal.push.PushBranchWizard.<init>(PushBranchWizard.java:81)
+	at org.eclipse.egit.ui.internal.push.PushBranchWizard.<init>(PushBranchWizard.java:60)
+	at org.eclipse.egit.ui.internal.commit.CommitJob.pushUpstream(CommitJob.java:179)
+	at org.eclipse.egit.ui.internal.commit.CommitJob.run(CommitJob.java:135)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
