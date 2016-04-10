@@ -1,0 +1,32 @@
+
+public class Prenda 
+{
+	protected int codigoPrenda;
+	protected String nombrePrenda;
+	protected int stockPrenda;
+	protected float precioPrenda;
+	
+	public String getNombrePrenda() 
+	{
+		return nombrePrenda;
+	}
+	public void setNombrePrenda(String nombrePrenda) 
+	{
+		this.nombrePrenda = nombrePrenda;
+	}
+	public int getStockPrenda() 
+	{
+		return stockPrenda;
+	}
+	public void setStockPrenda(int stockPrenda) 
+	{
+		this.stockPrenda = stockPrenda;
+	}
+	
+	public boolean sosPrenda(int cod)
+	{
+		return (codigoPrenda==cod);
+	}
+	
+	
+}

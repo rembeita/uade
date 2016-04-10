@@ -1,0 +1,11 @@
+
+public class prendaDeTemporada extends Prenda 
+{
+	public prendaDeTemporada(int codigoPrenda, String nombrePrenda, int stockPrenda, Material material,
+			int cantMaterial) {
+		super(codigoPrenda, nombrePrenda, stockPrenda, material, cantMaterial);
+		// TODO Auto-generated constructor stub
+	}
+	private String estacion;
+	private float porcentajeIncremento;
+}

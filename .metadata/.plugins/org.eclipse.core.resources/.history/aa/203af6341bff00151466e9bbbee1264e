@@ -1,0 +1,16 @@
+
+public class Material 
+{
+	private int codigoMaterial;
+	private String nombreMaterial;
+	private int cantStock;
+	private Proveedor proveedor;
+	private float costo;
+	private int cantidadAPedir;
+	private int puntoDeReposicion;
+
+	
+	
+	
+	
+}

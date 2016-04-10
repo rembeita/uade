@@ -1,0 +1,6 @@
+
+public class Proveedor 
+{
+	private String nombreProveedor;
+	private int codigoProveedor;
+}

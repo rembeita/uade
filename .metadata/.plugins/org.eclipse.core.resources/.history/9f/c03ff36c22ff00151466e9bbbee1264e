@@ -1,0 +1,134 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.Vector;
+
+public class SistemaIndumentaria 
+{
+	private Vector<Prenda>prendas;
+	private Vector<Material>materiales;
+	private Vector<Proveedor>proveedores;
+
+	
+	private void cargaInicial()
+	{
+		Proveedor proveedor1 = new Proveedor("Cachito SA", 5);
+		Proveedor proveedor2 = new Proveedor("Pepito SA", 2);
+		proveedores.add(proveedor1);
+		proveedores.add(proveedor2);
+
+		Material material1 = new Material(10, "botones", 80, proveedor1, (float) 5.5, 100, 20);
+		Material material2 = new Material(20, "algodon", 80, proveedor2, (float) 12.5, 200, 10);
+		materiales.add(material1);
+		materiales.add(material2);
+
+		PrendaSinTemporada prenda_sin_temporada3 = new PrendaSinTemporada();
+		prenda_sin_temporada3.setCodigoPrenda(20);
+		prenda_sin_temporada3.setNombrePrenda("pantalon1");
+		prenda_sin_temporada3.setStockPrenda(10);
+		prendas.add(prenda_sin_temporada3);
+		
+		PrendaSinTemporada prenda_sin_temporada2 = new PrendaSinTemporada();
+		prenda_sin_temporada2.setCodigoPrenda(10);
+		prenda_sin_temporada2.setNombrePrenda("pantalon2");
+		prenda_sin_temporada2.setStockPrenda(10);
+		prendas.add(prenda_sin_temporada2);
+	}
+	
+	public SistemaIndumentaria()
+	{
+		prendas = new Vector<Prenda>();
+		materiales = new Vector<Material>();
+		proveedores = new Vector<Proveedor>();
+
+		cargaInicial();
+		
+	}
+	
+	public boolean AltaPrendaSinTemporada()
+	{
+		int stock, codigo;
+		
+		System.out.println("##### DANDO DE ALTA PRENDA SIN TEMPORADA #####");
+		System.out.print("Ingrese el codigo:");
+		Scanner scanCodigo = new Scanner(System.in);
+		String strCodigo = scanCodigo.nextLine();
+		codigo = Integer.parseInt(strCodigo);
+		if (buscarPrenda(codigo) != null)
+		{
+			System.out.println("El codigo ya existe!");
+			return false;
+		}
+		
+		System.out.print("Ingrese el nombre de la prenda:");
+		Scanner scanPrenda = new Scanner(System.in);
+		String nombrePrenda = scanPrenda.nextLine();
+		
+		System.out.print("Ingrese la cantidad de stock:");
+		Scanner scanStock = new Scanner(System.in);
+		String strStock = scanStock.nextLine();
+		stock = Integer.parseInt(strStock);
+		
+		PrendaSinTemporada prenda_sin_temporada = new PrendaSinTemporada();
+		prenda_sin_temporada.setCodigoPrenda(codigo);
+		prenda_sin_temporada.setNombrePrenda(nombrePrenda);
+		prenda_sin_temporada.setStockPrenda(stock);
+		
+		
+		System.out.print("Ingrese el codigo del material:");
+		Scanner scanCodMaterial = new Scanner(System.in);
+		String strCodMaterial = scanCodMaterial.nextLine();
+		int codMaterial = Integer.parseInt(strCodMaterial);
+		Material materialbuscado = this.buscarMaterial(codMaterial);
+		
+		System.out.print("Ingrese la cantidad de ese material:");
+		Scanner scanCantMaterial = new Scanner(System.in);
+		String strCantMaterial = scanCantMaterial.nextLine();
+		int cantMaterial = Integer.parseInt(strCantMaterial);
+		
+		ItemPrenda itemprenda = new ItemPrenda(cantMaterial, materialbuscado );
+		prenda_sin_temporada.agregarItemPrenda(itemprenda);
+		
+		if (materialbuscado.reducirStock(cantMaterial))
+		{
+			prendas.add(prenda_sin_temporada);
+		}
+		else
+		{
+			return false;
+		}
+		materialbuscado.imprimirCantStock();
+		
+
+		return true;
+	}
+	
+	private Prenda buscarPrenda(int cod)
+	{
+		System.out.println("Buscando prenda!");
+
+		for (int i=0; i<prendas.size();i++)
+		{
+			if (prendas.elementAt(i).sosPrenda(cod))
+				return prendas.elementAt(i);
+		}
+
+		return null;
+	}
+	
+	private Material buscarMaterial(int cod)
+	{
+		System.out.println("Buscando Material!");
+
+		for (int i=0; i<materiales.size();i++)
+		{
+			if (materiales.elementAt(i).sosMaterial(cod))
+				return materiales.elementAt(i);
+		}
+
+		return null;
+	}
+	
+	
+	
+}

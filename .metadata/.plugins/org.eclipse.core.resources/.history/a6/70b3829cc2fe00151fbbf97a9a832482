@@ -1,0 +1,5 @@
+
+public class prendaDeTemporada extends Prenda {
+	private String estacion;
+	private float porcentajeIncremento;
+}

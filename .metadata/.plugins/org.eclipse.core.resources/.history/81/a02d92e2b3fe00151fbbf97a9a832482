@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class MainSistemaIndumentaria2 
+{
+
+	public static void main(String[] args) 
+	{
+		MainSistemaIndumentaria2 sistema = new MainSistemaIndumentaria2();
+		sistema.mostrarMenu();
+
+	}
+
+	public void mostrarMenu() 
+	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	 	
+		//Imprimo menu de opciones
+		System.out.println("MENU DE OPCIONES");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("1.- ABM Prenda");
+		System.out.println("2.- Venta de Prendas");
+		System.out.println("3.- Listar Ordenes de Compra");
+		System.out.println("9.- Salir");
+		System.out.println("-------------------------------------------------------");
+		System.out.print("Opcion:");
+		try
+		{
+			char s = (char)reader.read();
+			
+		  	switch (s)
+		  	{
+		  		case '1' : 
+		  		{
+		  			this.mostrarMenuABMPrendas();
+		  			break;
+		  		}
+			  	case '2' : 
+			  	{
+			//  		this.abrirCuenta();
+			  		break;
+			  	}
+			  	case '3' : 
+			  	{
+			//  		this.listarCuentas();
+			  		break;
+			  	}
+		
+			  	case '9' : 
+			  	{
+			  		//this.salir();
+			  	}
+		  	}
+		}
+		catch (Exception e)
+		{
+		}
+
+	}
+	
+	public void mostrarMenuABMPrendas() 
+	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	 	
+		//Imprimo menu de opciones
+		System.out.println("MENU DE OPCIONES - ABM PRENDAS");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("1.- Dar de Alta una Prenda");
+		System.out.println("2.- Dar de Baja una Prenda");
+		System.out.println("3.- Modificar una prenda");
+		System.out.println("9.- Salir");
+		System.out.println("-------------------------------------------------------");
+		System.out.print("Opcion:");
+		try
+		{
+			char s = (char)reader.read();
+			
+		  	switch (s)
+		  	{
+		  		case '1' : 
+		  		{
+		  	//		this.crearCliente();
+		  			break;
+		  		}
+			  	case '2' : 
+			  	{
+			//  		this.abrirCuenta();
+			  		break;
+			  	}
+			  	case '3' : 
+			  	{
+			//  		this.listarCuentas();
+			  		break;
+			  	}
+		
+			  	case '9' : 
+			  	{
+			  		//this.salir();
+			  	}
+		  	}
+		}
+		catch (Exception e)
+		{
+		}
+
+	}
+	
+	
+}

@@ -1,0 +1,6 @@
+
+public class Prenda 
+{
+	protected int codigoPrenda;
+	protected int codigoPrenda;
+}

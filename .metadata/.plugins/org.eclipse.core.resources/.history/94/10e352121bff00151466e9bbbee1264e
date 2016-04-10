@@ -1,0 +1,11 @@
+
+public class Material 
+{
+	private int codigoMaterial;
+	private String nombreMaterial;
+	private int cantStock;
+	
+	
+	
+	
+}

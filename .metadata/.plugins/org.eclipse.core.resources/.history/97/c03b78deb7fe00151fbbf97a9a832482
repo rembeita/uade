@@ -1,0 +1,8 @@
+
+public class Prenda 
+{
+	protected int codigoPrenda;
+	protected String nombrePrenda;
+	protected int stockPrenda;
+	protected float precioPrenda;
+}

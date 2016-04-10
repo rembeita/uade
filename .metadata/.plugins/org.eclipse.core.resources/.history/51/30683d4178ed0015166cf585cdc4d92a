@@ -1,0 +1,112 @@
+
+public class Procesos 
+{
+
+	public float promedio(TDAPila pila)
+	{
+		int cantidad = 0;
+		int suma = 0;
+		float resultado = 0;
+		while (!pila.pilaVacia())
+		{
+			suma = suma + pila.tope(); 
+			cantidad++;
+			pila.desapilar();	
+		}
+		if ( cantidad > 0)
+		{
+			resultado =  (float) suma / cantidad;
+		}
+		return resultado;
+	}
+	
+	public TDAPila copiar(TDAPila pila)
+	{
+		TDAPila resultado = new PilaEstatica();
+		TDAPila trabajo = new PilaEstatica();
+		resultado.inicializar();
+		trabajo.inicializar();
+		int valor;
+		
+		while (!pila.pilaVacia())
+		{
+			valor = pila.tope();
+			pila.desapilar();
+			trabajo.apilar(valor);
+			
+		}
+		while(!trabajo.pilaVacia())
+		{
+			valor = trabajo.tope();
+			resultado.apilar(valor);
+			pila.apilar(valor);
+			//System.out.println("Armando pila normal y pila resultado: " + valor);
+			trabajo.desapilar();
+		}
+		
+		return resultado;
+	}
+
+	public TDAPila ordenar(TDAPila pila)
+	{
+		TDAPila trabajo = new PilaEstatica(); 
+		TDAPila resultado = new PilaEstatica();
+		int valor=0;
+		int contador=0;
+		int anterior=0;
+		resultado.inicializar();
+		trabajo.inicializar();
+		trabajo = this.copiar(pila);
+		
+		while(!trabajo.pilaVacia())
+		{
+			if (contador == 0)
+			{
+				valor = trabajo.tope();
+			}
+			else if (trabajo.tope() > valor)
+			{
+				valor = trabajo.tope();
+			}
+			contador++;
+			trabajo.desapilar();
+		}
+		System.out.println("Primer valor ordenado: "+ valor);
+		resultado.apilar(valor);
+		System.out.println("contador: "+ contador);
+		anterior = valor;
+		valor = 0;
+		trabajo = this.copiar(pila);
+		
+		while ( contador > 1 )
+		{
+			
+			while(!trabajo.pilaVacia())
+			{
+				
+				if ( trabajo.tope() < resultado.tope() && trabajo.tope() > valor)
+				{
+					valor = trabajo.tope();
+					anterior = valor;
+				}
+				/*
+				else if (anterior == trabajo.tope())
+				{
+					valor = anterior;
+				}
+				*/
+				trabajo.desapilar();
+			}
+			contador--;
+			System.out.println("apilando: " + valor);
+			resultado.apilar(valor);
+			valor = 0;
+			trabajo = this.copiar(pila);
+		}
+		return resultado;
+	}
+
+
+
+}
+

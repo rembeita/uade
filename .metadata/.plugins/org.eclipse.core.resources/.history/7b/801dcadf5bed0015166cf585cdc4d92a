@@ -1,0 +1,35 @@
+import java.util.Random;
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+		System.out.println("Cargando Pila");
+		TDAPila mipila = new PilaEstatica();
+		TDAPila otrapila;
+		Random rand = new Random();
+		int num_aleatorio,max=20, min=0, valorpilavieja, valorpilanueva;
+		float imprimir_resultado= 0;
+		mipila.inicializar();
+		Procesos proceso = new Procesos();
+		
+		for(int i=0; i < 5; i++)
+		{
+			num_aleatorio = rand.nextInt(max-min)+min;
+			System.out.println(num_aleatorio);
+			mipila.apilar(num_aleatorio);
+		}
+		System.out.println("tope pila nueva" + mipila.tope());
+		imprimir_resultado = proceso.promedio(mipila);
+		System.out.println("Promedio de la pila: " + imprimir_resultado);
+		Procesos copiapila = new Procesos();
+		//otrapila = copiapila.copiar(mipila);
+		//otrapila.tope();
+		//valorpilanueva = mipila.tope();
+		
+	}
+	
+}
+
+
