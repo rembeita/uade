@@ -100,7 +100,7 @@ public class MainSistemaIndumentaria
 			  	}
 			  	case '3' : 
 			  	{
-			//  		this.listarCuentas();
+			  		this.modificarPrenda();
 			  		break;
 			  	}
 			  	case '4' : 
@@ -481,4 +481,107 @@ public class MainSistemaIndumentaria
 		
 		}
 	}
+	
+	
+	public boolean modificarPrenda()
+	{
+		int stock, codigo;
+		boolean respuesta, finCargaMateriales=true;
+		Prenda prendainstanciada;
+		
+		System.out.println("##### MODIFICANDO PRENDA #####");
+		System.out.print("Ingrese el codigo:");
+		Scanner scanCodigo = new Scanner(System.in);
+		String strCodigo = scanCodigo.nextLine();
+		codigo = Integer.parseInt(strCodigo);
+		prendainstanciada = sistemaindumentaria.buscarPrenda(codigo);
+		
+		if (prendainstanciada == null)
+		{
+			System.out.println("No se encontro la prenda");
+			return false;
+		}
+		
+		System.out.print("Ingrese el nombre de la prenda:");
+		Scanner scanPrenda = new Scanner(System.in);
+		String nombrePrenda = scanPrenda.nextLine();
+		prendainstanciada.setNombrePrenda(nombrePrenda);
+		
+		System.out.print("Ingrese la cantidad de stock:");
+		Scanner scanStock = new Scanner(System.in);
+		String strStock = scanStock.nextLine();
+		stock = Integer.parseInt(strStock);
+		prendainstanciada.setStockPrenda(stock);
+		
+		Scanner scanCodMaterial = null, scanCantMaterial = null;
+		String strCodMaterial, strCantMaterial;
+		int codMaterial, cantMaterial;
+		Material materialbuscado;
+				
+		
+		System.out.print("Desea cargar materiales?: (s/n)");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			char s = (char)reader.read();
+			if ( s != 's')
+			{
+				finCargaMateriales = false;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		while (finCargaMateriales)
+		{
+						
+			System.out.print("Ingrese el codigo del material:");
+			scanCodMaterial = new Scanner(System.in);
+			strCodMaterial = scanCodMaterial.nextLine();
+			codMaterial = Integer.parseInt(strCodMaterial);
+			materialbuscado = sistemaindumentaria.buscarMaterial(codMaterial);
+			if (materialbuscado == null)
+			{
+				System.out.println("Mensaje: No se encontro el material.");
+				return false;
+			}
+			
+			System.out.print("Ingrese la cantidad de ese material:");
+			scanCantMaterial = new Scanner(System.in);
+			strCantMaterial = scanCantMaterial.nextLine();
+			cantMaterial = Integer.parseInt(strCantMaterial);
+			
+			if (cantMaterial < 1)
+			{
+				System.out.println("Mensaje: La cantidad de material debe ser mayor a 0.");
+				return false;
+			}
+			
+			prendainstanciada.incorporarItemVenta(cantMaterial, materialbuscado);
+			
+		    System.out.print("Desea seguir cargando materiales?: (s/n)");
+			reader = new BufferedReader(new InputStreamReader(System.in));
+
+			try {
+				char s = (char)reader.read();
+				if ( s != 's')
+				{
+					finCargaMateriales = false;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+		return true;
+	}
+	
+	
+		
+	
 }
