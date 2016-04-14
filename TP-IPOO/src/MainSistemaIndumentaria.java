@@ -47,7 +47,8 @@ public class MainSistemaIndumentaria
 		  		}
 			  	case '2' : 
 			  	{
-			//  		this.abrirCuenta();
+			  		this.ventaPrendas();
+			  		this.mostrarMenu();
 			  		break;
 			  	}
 			  	case '3' : 
@@ -105,7 +106,7 @@ public class MainSistemaIndumentaria
 			  	}
 			  	case '4' : 
 			  	{
-			  		this.listarPrendas();
+			  		this.listarPrendas(true);
 			  		break;
 			  	}
 			  	
@@ -120,8 +121,6 @@ public class MainSistemaIndumentaria
 		}
 
 	}
-	
-	
 	
 	public void crearPrenda() 
 	{
@@ -226,7 +225,6 @@ public class MainSistemaIndumentaria
 		System.exit(0);
 	}
 	
-
 	public boolean AltaPrendaSinTemporada()
 	{
 		int stock, codigo;
@@ -334,8 +332,7 @@ public class MainSistemaIndumentaria
 		
 		return true;
 	}
-	
-	
+		
 	public boolean AltaPrendaDeTemporada(String epoca)
 	{
 		int stock, codigo;
@@ -444,20 +441,33 @@ public class MainSistemaIndumentaria
 		return true;
 	}
 	
-	
-	public void listarPrendas()
+	public void listarPrendas(boolean ventas)
 	{
-		System.out.println("LISTANDO PRENDAS!");
+		System.out.println("LISTADO DE PRENDAS");
+		System.out.println("-------------------------------------------------------");
 		Vector<Prenda>mostrarprendas;
 		mostrarprendas = sistemaindumentaria.getPrendas();
 		for (int i=0; i<mostrarprendas.size();i++)
 		{
-			System.out.println("codigo: " + mostrarprendas.elementAt(i).getCodigoPrenda() + " nombre: "
-					+ mostrarprendas.elementAt(i).getNombrePrenda());
+			if (ventas == true || mostrarprendas.elementAt(i).getStockPrenda() > 0 )
+			{
+			System.out.println("CODIGO: " + mostrarprendas.elementAt(i).getCodigoPrenda() + " NOMBRE: "
+					+ mostrarprendas.elementAt(i).getNombrePrenda() + " STOCK: " 
+					+ mostrarprendas.elementAt(i).getStockPrenda() + " PRECIO: " 
+					+ mostrarprendas.elementAt(i).getPrecioPrenda());
+			}
+			else if (ventas == false)
+			{
+				System.out.println("CODIGO: " + mostrarprendas.elementAt(i).getCodigoPrenda() + " NOMBRE: "
+						+ mostrarprendas.elementAt(i).getNombrePrenda() + " STOCK: " 
+						+ mostrarprendas.elementAt(i).getStockPrenda() + " PRECIO: " 
+						+ mostrarprendas.elementAt(i).getPrecioPrenda());
+			}
+
 		}
+		System.out.println("-------------------------------------------------------");
 
 	}
-	
 
 	public void bajaPrenda()
 	{
@@ -481,8 +491,7 @@ public class MainSistemaIndumentaria
 		
 		}
 	}
-	
-	
+
 	public boolean modificarPrenda()
 	{
 		int stock, codigo;
@@ -574,14 +583,96 @@ public class MainSistemaIndumentaria
 				e.printStackTrace();
 			}
 			
-			
-			
 		}
 		
 		return true;
 	}
-	
-	
+
+	public boolean ventaPrendas() 
+	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		boolean compraEnProceso=true;
+		//true es igual a vista cliente
+		this.listarPrendas(true);
+		Prenda prenda;
+		Scanner scanEntrada;
+		int codigo, cantidadPrenda;
+		String respuesta;
 		
+		System.out.print("Ingrese el nombre del cliente:");
+		Scanner scanCliente = new Scanner(System.in);
+		String nombreCliente = scanCliente.nextLine();
+		
+		Factura factura = sistemaindumentaria.generarFactura(10, "HOY", nombreCliente);
+		
+		while (compraEnProceso)
+		{
+			System.out.print("Ingrese el codigo:");
+			scanEntrada = new Scanner(System.in);
+			codigo = Integer.parseInt(scanEntrada.nextLine());
+		
+				prenda = sistemaindumentaria.buscarPrenda(codigo);
+				if ( prenda == null)
+				{
+					System.out.println("El codigo no existe!");
+					return false;
+				}
+
+				System.out.print("Ingrese cantidad:");
+				scanEntrada = new Scanner(System.in);
+				cantidadPrenda = Integer.parseInt(scanEntrada.nextLine());
+				if (cantidadPrenda > prenda.getStockPrenda())
+				{
+					System.out.println("No hay suficiente Stock");
+					
+				}
+				else
+				{
+					factura.incorporarItemFactura(cantidadPrenda, prenda);
+				}
+				
+			
+				System.out.print("Desea seguir comprando?: (s/n)");
+				reader = new BufferedReader(new InputStreamReader(System.in));
+				try {
+					char s = (char)reader.read();
+					if ( s != 's')
+					{
+						compraEnProceso = false;
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		this.imprimirFactura(factura);
+		return true;
+	}
+	
+	public void imprimirFactura(Factura factura)
+	{
+		System.out.println("IMPRIMIENDO FACTURA...");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("NRO FACTURA: " + factura.getNroFactura());
+		System.out.println("CLIENTE: " + factura.getNombreCliente());
+		System.out.println("LOCAL: " + factura.getNombreLocal());
+		System.out.println("FECHA: " + factura.getFecha());
+		
+		for (int i = 0; i < factura.getItemfacturas().size() ; i++)
+		{
+			System.out.println("NOMBRE ARTICULO: " + 
+					factura.getItemfacturas().elementAt(i).getPrenda().getNombrePrenda());
+			System.out.println("CANTIDAD: " + 
+					factura.getItemfacturas().elementAt(i).getCantidadComprada());
+			System.out.println("PRECIO: " + 
+					factura.getItemfacturas().elementAt(i).getPrenda().getPrecioPrenda() *
+					factura.getItemfacturas().elementAt(i).getCantidadComprada());
+			
+		}
+		
+		System.out.println("PRECIO TOTAL: " + factura.getPrecioTotal());
+		System.out.println("-------------------------------------------------------");
+		
+	}
 	
 }
